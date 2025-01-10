@@ -140,23 +140,23 @@ class Customer(models.Model):
         db_table = "customer"
 
 
-class Dealer(models.Model):
-    dealer_id = models.AutoField(primary_key=True)
+class Vendor(models.Model):
+    vendor_id = models.AutoField(primary_key=True)
     tenant = models.ForeignKey(Tenant, models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(Users, models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey(Country, models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     updated_by = models.IntegerField(blank=True, null=True)
-    dealer_name = models.CharField(max_length=255, blank=True, null=True)
+    vendor_name = models.CharField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
     class Meta:
-        db_table = "dealer"
+        db_table = "vendor"
 
 
-class Dealeremployee(models.Model):
-    dealer_employee_id = models.AutoField(primary_key=True)
+class Vendoremployee(models.Model):
+    vendor_employee_id = models.AutoField(primary_key=True)
     tenant = models.ForeignKey(Tenant, models.SET_NULL, blank=True, null=True)
     store = models.ForeignKey('Store', models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(Users, models.SET_NULL, blank=True, null=True)
@@ -170,7 +170,7 @@ class Dealeremployee(models.Model):
     eff_end_date = models.DateField(blank=True, null=True)
 
     class Meta:
-        db_table = "dealeremployee"
+        db_table = "vendoremployee"
 
 
 class Delivery(models.Model):
@@ -263,7 +263,7 @@ class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
     tenant = models.ForeignKey(Tenant, models.SET_NULL, blank=True, null=True)
     location = models.ForeignKey(Location, models.SET_NULL, blank=True, null=True)
-    dealer = models.ForeignKey(Dealer, models.SET_NULL, blank=True, null=True)
+    vendor = models.ForeignKey(Vendor, models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey(Country, models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
