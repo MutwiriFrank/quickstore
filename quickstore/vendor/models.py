@@ -52,16 +52,6 @@ class Store(models.Model):
         db_table = "store"
 
 
-class Storecategory(models.Model):
-    store_category_id = models.AutoField(primary_key=True)
-    store_category_name = models.CharField(max_length=255, blank=True, null=True)
-    country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        db_table = "storecategory"
-
-
 class Storetocustomer(models.Model):
     """
     These are unique customers per store
@@ -82,27 +72,6 @@ class Storetocustomer(models.Model):
 
     class Meta:
         db_table = "storetocustomer"
-
-
-class Storetoproduct(models.Model):
-    store_to_product_id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(
-        "products.Product", models.SET_NULL, blank=True, null=True
-    )
-    store = models.ForeignKey(Store, models.SET_NULL, blank=True, null=True)
-    product_price = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    eff_start_date = models.DateField(blank=True, null=True)
-    eff_end_date = models.DateField(blank=True, null=True)
-    store_category = models.ForeignKey(
-        Storecategory, models.SET_NULL, blank=True, null=True
-    )
-    country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        db_table = "storetoproduct"
 
 
 class Supplier(models.Model):
