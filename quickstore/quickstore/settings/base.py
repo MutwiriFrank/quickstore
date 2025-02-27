@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # installed apps
     "rest_framework",
+    "drf_spectacular",
     # my apps
     "users",
     "payments",
@@ -96,3 +97,15 @@ STATIC_URL = "static/"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Quickstore',
+    'DESCRIPTION': 'This is a MUltitenant Ecommerce',
+    'VERSION': '1.0.0',
+    # 'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

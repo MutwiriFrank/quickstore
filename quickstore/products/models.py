@@ -19,17 +19,18 @@ class Category(models.Model):
         db_table = "category"
 
 
-    class Product(models.Model):
-        product_id = models.AutoField(primary_key=True)
-        product_name = models.CharField(max_length=255, blank=True, null=True)
-        category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True)
-        brand = models.ForeignKey(Brand, models.SET_NULL, blank=True, null=True)
-        product_description = models.TextField(blank=True, null=True)
-        is_digital = models.CharField(default="False")
-        created_at = models.DateTimeField(blank=True, null=True)
+class Product(models.Model):
+    product_id = models.AutoField(primary_key=True)
+    product_name = models.CharField(max_length=255, blank=True, null=True)
+    category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True)
+    brand = models.ForeignKey(Brand, models.SET_NULL, blank=True, null=True)
+    product_description = models.TextField(blank=True, null=True)
+    image_url = models.TextField
+    is_digital = models.CharField(default="False")
+    created_at = models.DateTimeField(blank=True, null=True)
 
-        class Meta:
-            db_table = "product"
+    class Meta:
+        db_table = "product"
 
 
 class Variation(models.Model):
