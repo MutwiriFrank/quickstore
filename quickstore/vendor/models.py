@@ -14,6 +14,9 @@ class Vendor(models.Model):
 
     class Meta:
         db_table = "vendor"
+        
+    def __str__(self):
+        return self.vendor_name
 
 
 class Vendoremployee(models.Model):
@@ -32,6 +35,9 @@ class Vendoremployee(models.Model):
 
     class Meta:
         db_table = "vendoremployee"
+           
+    def __str__(self):
+        return self.user
 
 
 class Store(models.Model):
@@ -51,6 +57,8 @@ class Store(models.Model):
     class Meta:
         db_table = "store"
 
+    def __str__(self):
+        return self.store_business_name
 
 class Storetocustomer(models.Model):
     """
@@ -76,7 +84,7 @@ class Storetocustomer(models.Model):
 
 class Supplier(models.Model):
     supplier_id = models.AutoField(primary_key=True)
-    supplier_full_names = models.CharField(max_length=255, blank=True, null=True)
+    supplier_full_name = models.CharField(max_length=255, blank=True, null=True)
     supplier_phone_number = models.CharField(max_length=15, blank=True, null=True)
     user_id = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
@@ -84,6 +92,9 @@ class Supplier(models.Model):
 
     class Meta:
         db_table = "supplier "
+        
+    def __str__(self):
+        return self.supplier_full_name
 
 
 class Supplierproducttostoreorder(models.Model):

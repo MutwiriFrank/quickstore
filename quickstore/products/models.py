@@ -8,6 +8,9 @@ class Brand(models.Model):
 
     class Meta:
         db_table = "brand"
+    
+    def __str__(self):
+        return self.brand_name
 
 
 class Category(models.Model):
@@ -18,7 +21,10 @@ class Category(models.Model):
     class Meta:
         db_table = "category"
 
-
+    def __str__(self):
+        return self.category_name
+    
+    
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255, blank=True, null=True)
@@ -31,6 +37,9 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product"
+    
+    def __str__(self):
+        return self.product_name
 
 
 class Variation(models.Model):
@@ -41,6 +50,9 @@ class Variation(models.Model):
 
     class Meta:
         db_table = "variation"
+        
+    def __str__(self):
+        return self.variation
 
 
 class Storecategory(models.Model):
@@ -52,6 +64,9 @@ class Storecategory(models.Model):
     class Meta:
         db_table = "storecategory"
 
+    def __str__(self):
+        return self.store_category_name
+    
 
 class Storetoproduct(models.Model):
     store_to_product_id = models.AutoField(primary_key=True)
