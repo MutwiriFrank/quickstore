@@ -14,7 +14,7 @@ class Vendor(models.Model):
 
     class Meta:
         db_table = "vendor"
-        
+
     def __str__(self):
         return self.vendor_name
 
@@ -35,7 +35,7 @@ class Vendoremployee(models.Model):
 
     class Meta:
         db_table = "vendoremployee"
-           
+
     def __str__(self):
         return self.user
 
@@ -59,6 +59,7 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store_business_name
+
 
 class Storetocustomer(models.Model):
     """
@@ -89,10 +90,12 @@ class Supplier(models.Model):
     user_id = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = "supplier "
-        
+
     def __str__(self):
         return self.supplier_full_name
 
@@ -110,6 +113,7 @@ class Supplierproducttostoreorder(models.Model):
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = "supplierproducttostoreorder"
@@ -136,6 +140,8 @@ class Supplierproducttostoreorderitem(models.Model):
     )
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = "supplierproducttostoreorderitem"
@@ -150,6 +156,8 @@ class Supplierstore(models.Model):
     eff_end_date = models.DateField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = "supplierstore"
@@ -169,6 +177,8 @@ class Supplierstoretoproduct(models.Model):
     )
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = "supplierstoretoproduct"
