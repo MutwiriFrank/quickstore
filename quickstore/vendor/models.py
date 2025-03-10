@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Vendor(models.Model):
@@ -7,8 +8,21 @@ class Vendor(models.Model):
     user = models.ForeignKey("users.Users", models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
     vendor_name = models.CharField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
@@ -26,8 +40,21 @@ class Vendoremployee(models.Model):
     user = models.ForeignKey("users.Users", models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
     full_name = models.CharField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     eff_start_date = models.DateField(blank=True, null=True)
@@ -47,8 +74,21 @@ class Store(models.Model):
     vendor = models.ForeignKey(Vendor, models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
     store_business_name = models.CharField(max_length=255, blank=True, null=True)
     store_phone_number = models.CharField(max_length=15, blank=True, null=True)
     eff_start_date = models.DateField(blank=True, null=True)
@@ -74,13 +114,29 @@ class Storetocustomer(models.Model):
     store = models.ForeignKey(Store, models.SET_NULL, blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
     eff_start_date = models.DateField(blank=True, null=True)
     eff_end_date = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = "storetocustomer"
+        
+    def __str__(self):
+        return f"{self.customer} + '-' + {self.store}"
 
 
 class Supplier(models.Model):
@@ -90,8 +146,21 @@ class Supplier(models.Model):
     user_id = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
 
     class Meta:
         db_table = "supplier "
@@ -112,8 +181,21 @@ class Supplierproducttostoreorder(models.Model):
     is_paid = models.BooleanField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
 
     class Meta:
         db_table = "supplierproducttostoreorder"
@@ -140,8 +222,21 @@ class Supplierproducttostoreorderitem(models.Model):
     )
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
 
     class Meta:
         db_table = "supplierproducttostoreorderitem"
@@ -156,8 +251,21 @@ class Supplierstore(models.Model):
     eff_end_date = models.DateField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
 
     class Meta:
         db_table = "supplierstore"
@@ -177,8 +285,21 @@ class Supplierstoretoproduct(models.Model):
     )
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
-    updated_by = models.IntegerField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
 
     class Meta:
         db_table = "supplierstoretoproduct"

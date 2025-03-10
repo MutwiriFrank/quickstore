@@ -1,7 +1,15 @@
 from django.db import models
+from django.conf import settings
 
 
 class Delivery(models.Model):
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Shipped", "Shipped"),
+        ("Delivered", "Delivered"),
+        ("Cancelled", "Cancelled"),
+    ]
+
     delivery_id = models.AutoField(primary_key=True)
     location_from = models.CharField(max_length=255, blank=True, null=True)
     location_to = models.CharField(max_length=255, blank=True, null=True)
@@ -11,10 +19,29 @@ class Delivery(models.Model):
     payment = models.ForeignKey(
         "payments.Payment", models.SET_NULL, blank=True, null=True
     )
+    delivery_date = models.DateTimeField(null=False, blank=False)
     is_complete = models.BooleanField(blank=True, null=True)
     cleared_by = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
+
+    def __str__(self):
+        return f"{self.location_to} + '-' + {self.delivery_date}"
 
     class Meta:
         db_table = "delivery"
@@ -30,7 +57,24 @@ class Orderitem(models.Model):
     quantity = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
+
+    def __str__(self):
+        return f"{self.store_to_product} + '-' + {self.store_id}"
 
     class Meta:
         db_table = "orderitem"
@@ -55,7 +99,24 @@ class Orders(models.Model):
     is_delivered = models.BooleanField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
     updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
+
+    def __str__(self):
+        return f"{self.order_id} + '-' + {self.order_time}"
 
     class Meta:
         db_table = "orders"
@@ -71,8 +132,25 @@ class Wishlist(models.Model):
     )
     eff_start_date = models.DateField(blank=True, null=True)
     eff_end_date = models.DateField(blank=True, null=True)
-    country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_created_by",
+    )
+    updated_at = models.DateTimeField(blank=True, null=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_updated_by",
+    )
+
+    def __str__(self):
+        return f"{self.store_to_product} + '-' + {self.wish_list_id}"
 
     class Meta:
 
