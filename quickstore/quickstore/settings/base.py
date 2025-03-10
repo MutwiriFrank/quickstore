@@ -2,6 +2,7 @@ import os
 
 from pathlib import Path
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -23,6 +24,8 @@ INSTALLED_APPS = [
     # installed apps
     "rest_framework",
     "drf_spectacular",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     # my apps
     "users",
     "payments",
@@ -100,12 +103,35 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
+
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Quickstore",
     "DESCRIPTION": "This is a MUltitenant Ecommerce",
     "VERSION": "1.0.0",
-    # 'SERVE_INCLUDE_SCHEMA': False,
+    "SERVE_INCLUDE_SCHEMA": False,
     # OTHER SETTINGS
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # Access token validity
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Refresh token validity
+    "ROTATE_REFRESH_TOKENS": False,  # Whether to rotate refresh tokens
+    "BLACKLIST_AFTER_ROTATION": True,  # Blacklist old tokens after rotation
+    "UPDATE_LAST_LOGIN": False,  # Update the user's last login on token refresh
+    "ALGORITHM": "HS256",  # Encryption algorithm
+    "SIGNING_KEY": "your-secret-key",  # Secret key for signing tokens
+    "VERIFYING_KEY": None,  # Public key for verification (if using asymmetric algorithms)
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "AUTH_HEADER_TYPES": ("Bearer",),  # Authorization header type
+    "USER_ID_FIELD": "user_id",  # Field in the user model to use as the token's user identifier
+    "USER_ID_CLAIM": "user_id",  # Claim in the token to store the user identifier
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
 }
