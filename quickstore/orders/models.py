@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class Delivery(models.Model):
-    STATUS_CHOICES = [
+    DELIVERY_STATUS_CHOICES = [
         ("Pending", "Pending"),
         ("Shipped", "Shipped"),
         ("Delivered", "Delivered"),
@@ -20,7 +20,9 @@ class Delivery(models.Model):
         "payments.Payment", models.SET_NULL, blank=True, null=True
     )
     delivery_date = models.DateTimeField(null=False, blank=False)
-    is_complete = models.BooleanField(blank=True, null=True)
+    delivery_status = models.CharField(
+        blank=True, null=True, choices=DELIVERY_STATUS_CHOICES
+    )
     cleared_by = models.IntegerField(blank=True, null=True)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
@@ -81,6 +83,14 @@ class Orderitem(models.Model):
 
 
 class Orders(models.Model):
+    ORDER_STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Shipped", "Shipped"),
+        ("Delivered", "Delivered"),
+        ("Cancelled", "Cancelled"),
+        ("Reversed", "Reversed"),
+    ]
+
     order_id = models.AutoField(primary_key=True)
     payment = models.ForeignKey(
         "payments.Payment", models.SET_NULL, blank=True, null=True
@@ -96,7 +106,7 @@ class Orders(models.Model):
         max_digits=10, decimal_places=2, blank=True, null=True
     )
     is_paid = models.BooleanField(blank=True, null=True)
-    is_delivered = models.BooleanField(blank=True, null=True)
+    order_status = models.CharField(blank=True, null=True, choices=ORDER_STATUS_CHOICES)
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.ForeignKey(
