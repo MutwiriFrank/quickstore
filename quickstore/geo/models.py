@@ -6,7 +6,7 @@ class Country(models.Model):
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     updated_by = models.IntegerField(blank=True, null=True)
-    country_code = models.CharField(unique=True, max_length=10)
+    country_code = models.CharField(max_length=3, unique=True)
     country_name = models.CharField(max_length=100)
 
     class Meta:

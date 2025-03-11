@@ -26,13 +26,16 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    IS_DIGITAL_CHOICES = [("True", "True"), ("False", "False")]
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True)
     brand = models.ForeignKey(Brand, models.SET_NULL, blank=True, null=True)
     product_description = models.TextField(blank=True, null=True)
     image_url = models.TextField
-    is_digital = models.CharField(default="False")
+    is_digital = models.CharField(
+        max_length=5, null=True, blank=True, choices=IS_DIGITAL_CHOICES, default="False"
+    )
     created_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:

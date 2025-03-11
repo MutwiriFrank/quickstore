@@ -134,7 +134,7 @@ class Storetocustomer(models.Model):
 
     class Meta:
         db_table = "storetocustomer"
-        
+
     def __str__(self):
         return f"{self.customer} + '-' + {self.store}"
 

@@ -98,7 +98,6 @@ class Orders(models.Model):
     delivery = models.ForeignKey(Delivery, models.SET_NULL, blank=True, null=True)
     order_time = models.DateTimeField(blank=True, null=True)
     delivery_time = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=50, blank=True, null=True)
     customer = models.ForeignKey(
         "users.Customer", models.SET_NULL, blank=True, null=True
     )
@@ -106,7 +105,13 @@ class Orders(models.Model):
         max_digits=10, decimal_places=2, blank=True, null=True
     )
     is_paid = models.BooleanField(blank=True, null=True)
-    order_status = models.CharField(blank=True, null=True, choices=ORDER_STATUS_CHOICES)
+    order_status = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        choices=ORDER_STATUS_CHOICES,
+        default="Pending",
+    )
     country = models.ForeignKey("geo.Country", models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.ForeignKey(
